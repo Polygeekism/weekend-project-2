@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html> 
-    <head>
-        <title>Math Weekend Project</title>
-        <script src='vendor/jquery.min.js'></script>
-        <script src='client.js'></script>
-        <link rel="stylesheet" href="style.css">
-   </head>
-    <body>
-        <div id='inputFields'>
-            <input id='firstNumber' type='text' placeholder='0'>
-            <input id='secondNumber' type='text' placeholder='0'>
-            <div id='buttonContainer'>
-                <button id='addition'>+</button>
-                <button id='subtraction'>-</button>
-                <button id='multiplication'>*</button>
-                <button id='division'>/</button>
-            </div>
+<html>
 
+<head>
+    <title>Math Weekend Project</title>
+    <script src='vendor/jquery.min.js'></script>
+    <script src='client.js'></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id='inputFields'>
+        <input id='firstNumber' type='number' placeholder='0'>
+        <input id='secondNumber' type='number' placeholder='0'>
+        <div id='buttonContainer'>
+            <button id='addition'>+</button>
+            <button id='subtraction'>-</button>
+            <button id='multiplication'>*</button>
+            <button id='division'>/</button>
         </div>
-    </body>
+        <button id='clearButton'>Clear Results</button>
+    </div>
+    <div id='displayResults'></div>
+</body>
+
 </html>
