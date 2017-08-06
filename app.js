@@ -14,18 +14,18 @@ app.listen(port, function () {
 });
 
 app.post('/addition', function (req, res) {
-    var sum = parseInt(req.body.x) + parseInt(req.body.y);
+    var sum = parseFloat(req.body.x) + parseFloat(req.body.y);
     res.send(sum.toString());
 });
 app.post('/subtract', function (req, res) {
-    var difference = parseInt(req.body.x) - parseInt(req.body.y);
+    var difference = parseFloat(req.body.x) - parseFloat(req.body.y);
     res.send(difference.toString());
 });
 app.post('/multiply', function (req, res) {
-    var product = parseInt(req.body.x) * parseInt(req.body.y);
+    var product = parseFloat(req.body.x) * parseFloat(req.body.y);
     res.send(product.toString());
 });
 app.post('/divide', function (req, res) {
-    var quotient = parseInt(req.body.x) / parseInt(req.body.y);
+    var quotient = parseFloat(req.body.x) / parseFloat(req.body.y);
     res.send(quotient.toString());
 });

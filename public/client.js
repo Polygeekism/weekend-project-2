@@ -1,55 +1,58 @@
 console.log('script.js is sourced');
+//global variable for storing numbers as they are entered
+var enteredNumber = '';
+//object to be sent to app.js
+var mathObject = {
+    x: '',
+    y: '',
+    operator: ''
+}
 
 $(document).ready(function () {
     console.log('jquery is sourced');
+    //listening for number button clicks
+    $('.calcButton').on('click', function () {
+        //pull the correct number from the button
+        var buttonPressed = this.value;
+        //print numbers to the dom as they are pressed
+        printToDom(buttonPressed);
+        //save number for building mathObject
+        enteredNumber += buttonPressed;
 
-
-    $('#buttonContainer').on('click', '#addition', function () {
-        //call object builder with operation clicked
-        var addObject = mathObjectBuilder('add');
-        //send object with url route to post function
-        postMathObject('/addition', addObject);
-
+    })
+    //click listening looking for operator clicks 
+    $('.operatorButton').on('click', function () {
+        //function to update dom and object with operator and reset enteredNumber
+        operatorUpdate(this);
     });
-    $('#buttonContainer').on('click', '#subtraction', function () {
-        //call object builder with operation clicked
-        var addObject = mathObjectBuilder('subtract');
-        //send object with url route to post function
-        postMathObject('/subtract', addObject);
 
-    });
-    $('#buttonContainer').on('click', '#multiplication', function () {
-        //call object builder with operation clicked
-        var addObject = mathObjectBuilder('multiply');
-        //send object with url route to post function
-        postMathObject('/multiply', addObject);
+    $('#equals').on('click', function () {
+        //complete the mathobject with second number
+        mathObjectStepTwo();
+        //call post method to send info to the server
+        postMathObject('/' + mathObject.operator, mathObject);
+    })
 
-    });
-    $('#buttonContainer').on('click', '#division', function () {
-        //call object builder with operation clicked
-        var addObject = mathObjectBuilder('divide');
-        //send object with url route to post function
-        postMathObject('/divide', addObject);
-        
-    });
     $('#clearButton').on('click', function () {
+        //call the clear page method
         clearPage();
     });
 
 
     //ajax function
 });
-//function that takes operator and builds object
-function mathObjectBuilder(operator) {
-    var mathObject = {
-        x: $('#firstNumber').val(),
-        y: $('#secondNumber').val(),
-        type: operator
-    }
-    //eventually this will send mahtobject to an ajax post
-    return mathObject;
+
+function operatorUpdate(thisOperator) {
+    //add the selected operator to the display
+    printToDom(' ' + $(thisOperator).html() + ' ');
+    //collect the text from the id of the selected button
+    var operator = thisOperator.id;
+    //change the values for the first two properties of the mathobject
+    mathObjectStepOne(enteredNumber, operator);
+    //clear the number variable to track next inputs
+    enteredNumber = '';
 }
-//ajax post that accepts both a url route and a completed object
+//ajax call to server for calculation that accepts the url path and mathobject
 function postMathObject(url, mathObject) {
     $.ajax({
         method: 'POST',
@@ -57,18 +60,31 @@ function postMathObject(url, mathObject) {
         data: mathObject,
         success: function (response) {
             console.log(response);
-            printToDom(response);
+            printToDom(' = ' + response);
 
         }
     });
 }
-
-function clearPage() {
-    $('#firstNumber').val('');
-    $('#secondNumber').val('');
-    $('#displayResults').empty();
-
+//take first number and operator and set those properties of the mathObject
+function mathObjectStepOne(number, operator) {
+    mathObject.x = number;
+    mathObject.operator = operator;
 }
-function printToDom(result){
-    $('#displayResults').prepend('<p>' +result +'</p>');
+//complete the math object
+function mathObjectStepTwo() {
+    mathObject.y = enteredNumber;
+}
+
+//clear the display and reset both the number tracker and the mathobject
+function clearPage() {
+    $('#displayResults').empty();
+    enteredNumber = '';
+    mathObject.x = '';
+    mathObject.y = '';
+    mathObject.operator = '';
+}
+
+//function to print things to the display
+function printToDom(result) {
+    $('#displayResults').append(result);
 }
