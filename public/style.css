@@ -12,6 +12,11 @@
   border: 1px solid #888;
   color: #333;
 }
+#rows{
+    display:flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
 
 #result:hover {
     
@@ -25,18 +30,17 @@
     top:10px;
 }Ï
 #background {
-    width:300px;
+    width:200px;
     height:400px;
     background:gray;
     margin:50px auto;
     -webkit-animation:bgChange 2s 2s alternate infinite;
     transition: all 2s ease;
+    display: flex;
+    justify-content: center;
 }
 
-/* #main{
-    display: flex;
-    justify-content: space-around
-} */
+
 #first-rows {
     margin-bottom: 20px;
     position: relative;

@@ -30,7 +30,9 @@ $(document).ready(function () {
         //complete the mathobject with second number
         mathObjectStepTwo();
         //call post method to send info to the server
+
         postMathObject('/' + mathObject.operator, mathObject);
+
     })
 
     $('#clearButton').on('click', function () {
@@ -60,7 +62,12 @@ function postMathObject(url, mathObject) {
         data: mathObject,
         success: function (response) {
             console.log(response);
-            printToDom(' = ' + response);
+            clearDisplay();
+            printToDom('Calculating...')
+            setTimeout(function () {
+                clearDisplay();
+                printToDom(response);
+            }, 3000);
 
         }
     });
@@ -77,11 +84,15 @@ function mathObjectStepTwo() {
 
 //clear the display and reset both the number tracker and the mathobject
 function clearPage() {
-    $('#displayResults').empty();
+    clearDisplay();
     enteredNumber = '';
     mathObject.x = '';
     mathObject.y = '';
     mathObject.operator = '';
+}
+
+function clearDisplay() {
+    $('#displayResults').empty();
 }
 
 //function to print things to the display
