@@ -61,9 +61,9 @@ function postMathObject(url, mathObject) {
         url: url,
         data: mathObject,
         success: function (response) {
-            console.log(response);
             clearDisplay();
             printToDom('Calculating...')
+            //delay display of new value for 3 seconds
             setTimeout(function () {
                 clearDisplay();
                 printToDom(response);
