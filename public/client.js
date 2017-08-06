@@ -1,41 +1,42 @@
 console.log('script.js is sourced');
 
 $(document).ready(function () {
-    console.log('jquery is soured');
-    
+    console.log('jquery is sourced');
+
 
     $('#buttonContainer').on('click', '#addition', function () {
-        //console.log('Addition clicked');
+        //call object builder with operation clicked
         var addObject = mathObjectBuilder('add');
-        console.log(addObject);
-        $.ajax({
-            method: 'POST',
-            url: '/addition',
-            data: addObject,
-            success: function(response){
-                console.log(response);
-            }
-        });
-        
+        //send object with url route to post function
+        postMathObject('/addition', addObject);
+
     });
     $('#buttonContainer').on('click', '#subtraction', function () {
-        //console.log('Subtraction clicked')
-        mathObjectBuilder('subtract');
+        //call object builder with operation clicked
+        var addObject = mathObjectBuilder('subtract');
+        //send object with url route to post function
+        postMathObject('/subtract', addObject);
+
     });
     $('#buttonContainer').on('click', '#multiplication', function () {
-        //console.log('Multiplication clicked')
-        mathObjectBuilder('multiply');
+        //call object builder with operation clicked
+        var addObject = mathObjectBuilder('multiply');
+        //send object with url route to post function
+        postMathObject('/multiply', addObject);
+
     });
     $('#buttonContainer').on('click', '#division', function () {
-        //console.log('Division clicked')
-        mathObjectBuilder('divide');
+        //call object builder with operation clicked
+        var addObject = mathObjectBuilder('divide');
+        //send object with url route to post function
+        postMathObject('/divide', addObject);
+        
     });
     $('#clearButton').on('click', function () {
-        console.log('clear button clicked');
         clearPage();
     });
 
-    
+
     //ajax function
 });
 //function that takes operator and builds object
@@ -48,11 +49,21 @@ function mathObjectBuilder(operator) {
     //eventually this will send mahtobject to an ajax post
     return mathObject;
 }
-//some kind of ajax post  
+//ajax post that accepts both a url route and a completed object
+function postMathObject(url, mathObject) {
+    $.ajax({
+        method: 'POST',
+        url: url,
+        data: mathObject,
+        success: function (response) {
+            console.log(response);
+        }
+    });
+}
 
 function clearPage() {
-        $('#firstNumber').val('');
-        $('#secondNumber').val('');
-        $('#displayResults').empty();
+    $('#firstNumber').val('');
+    $('#secondNumber').val('');
+    $('#displayResults').empty();
 
-    }
+}
