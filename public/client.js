@@ -57,6 +57,8 @@ function postMathObject(url, mathObject) {
         data: mathObject,
         success: function (response) {
             console.log(response);
+            printToDom(response);
+
         }
     });
 }
@@ -66,4 +68,7 @@ function clearPage() {
     $('#secondNumber').val('');
     $('#displayResults').empty();
 
+}
+function printToDom(result){
+    $('#displayResults').prepend('<p>' +result +'</p>');
 }
